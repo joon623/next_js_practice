@@ -9,3 +9,5 @@
 5. gutter 컬럼 사이에 간격을 말한다.
 
 6. a 태그에서 target="\_blank"를 사용할 땐 rel="noreferrer nopoener"까지 써줘야 보안 위협이 사라진다.
+
+7. Echarts, Antd, Vue 대륙의 실수

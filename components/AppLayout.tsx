@@ -1,8 +1,17 @@
-import Link from "next/link";
-import { Menu, Input, Button } from "antd";
-// import "antd/dist/antd.css";
+import Link from 'next/link';
+import { Menu, Input, Button, Col, Row } from 'antd';
+import LoginForm from './LoginForm';
+import UserProfile from './UserProfile';
+import { useSelector } from 'react-redux';
+import { RootState } from '../reducers';
 
-function AppLayout({ children }) {
+interface AppLayoutProps {
+  children: React.ReactChild;
+}
+
+function AppLayout({ children }: AppLayoutProps) {
+  const { isLoggedIn } = useSelector((state: RootState) => state.user.user);
+
   return (
     <div>
       <Menu mode="horizontal">
@@ -17,15 +26,22 @@ function AppLayout({ children }) {
           </Link>
         </Menu.Item>
         <Menu.Item key="mail">
-          <Input.Search enterButton style={{ verticalAlign: "middle" }} />
+          <Input.Search enterButton style={{ verticalAlign: 'middle' }} />
         </Menu.Item>
       </Menu>
-      <Link href="/signup">
-        <a>
-          <Button>회원가입</Button>
-        </a>
-      </Link>
-      {children}
+      <Row gutter={8}>
+        <Col xs={24} md={6}>
+          {isLoggedIn ? <UserProfile /> : <LoginForm />}
+        </Col>
+        <Col xs={24} md={12}>
+          {children}
+        </Col>
+        <Col xs={24} md={6}>
+          <a href="https://naver.com" target="_blank" rel="noreferrer noopener">
+            Made by Jun
+          </a>
+        </Col>
+      </Row>
     </div>
   );
 }
