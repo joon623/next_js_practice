@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logoutAction } from '../reducers/user';
 
 const dummy = {
-  nickname: '제로초',
+  nickname: '박남준',
   Posts: [],
   Followings: [],
   Followers: [],

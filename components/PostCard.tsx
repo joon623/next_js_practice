@@ -14,27 +14,13 @@ import CommentForm from './CommentForm';
 import PostCardContent from './PostCardContent';
 import PostImages from './PostImages';
 import FollowButton from './FollowButton';
+import { MainPostType } from '../types/post';
 
-const dummyComments = [
-  {
-    User: {
-      nickname: 'nero',
-    },
-    content: '우와 개정판이 나왔군요~',
-  },
-  {
-    User: {
-      nickname: 'hero',
-    },
-    content: '얼른 사고싶어요~',
-  },
-];
+interface PostCardProps {
+  post: MainPostType;
+}
 
-const CardWrapper = styled.div`
-  margin-bottom: 20px;
-`;
-
-const PostCard = ({ post }: any) => {
+const PostCard = ({ post }: PostCardProps) => {
   const [commentFormOpened, setCommentFormOpened] = useState(false);
   const [liked, setLiked] = useState(false);
 
@@ -47,7 +33,7 @@ const PostCard = ({ post }: any) => {
   }, []);
 
   return (
-    <CardWrapper key={post.id}>
+    <CardWrapper>
       <Card
         cover={post.Images[0] && <PostImages images={post.Images} />}
         actions={[
@@ -78,7 +64,7 @@ const PostCard = ({ post }: any) => {
         extra={<FollowButton post={post} />}
       >
         <Card.Meta
-          avatar={<Avatar>{post.User.nickname[0]}</Avatar>}
+          avatar={<Avatar>{post.User.nickname}</Avatar>}
           title={post.User.nickname}
           description={<PostCardContent postData={post.content} />}
         />
@@ -87,27 +73,32 @@ const PostCard = ({ post }: any) => {
         <>
           <CommentForm post={post} />
           <List
-            header={`${dummyComments.length} 댓글`}
+            header={`${post.Comments.length} 댓글`}
             itemLayout="horizontal"
-            dataSource={dummyComments}
-            renderItem={(item) => (
-              <li>
-                <Comment
-                  author={item.User.nickname}
-                  avatar={
-                    <Link
-                      href={{ pathname: '/user', query: { id: item.User.id } }}
-                      as={`/user/${item.User.id}`}
-                    >
-                      <a>
-                        <Avatar>{item.User.nickname[0]}</Avatar>
-                      </a>
-                    </Link>
-                  }
-                  content={item.content}
-                />
-              </li>
-            )}
+            dataSource={post.Comments}
+            renderItem={(item) => {
+              return (
+                <li>
+                  <Comment
+                    author={item.User.nickname}
+                    avatar={
+                      <Link
+                        href={{
+                          pathname: '/user',
+                          query: { id: item.User.id },
+                        }}
+                        as={`/user/${item.User.id}`}
+                      >
+                        <a>
+                          <Avatar>{item.User.nickname}</Avatar>
+                        </a>
+                      </Link>
+                    }
+                    content={item.content}
+                  />
+                </li>
+              );
+            }}
           />
         </>
       )}
@@ -116,3 +107,7 @@ const PostCard = ({ post }: any) => {
 };
 
 export default PostCard;
+
+const CardWrapper = styled.div`
+  margin-bottom: 20px;
+`;

@@ -1,5 +1,6 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { Form, Input, Button } from 'antd';
+import { useDispatch } from 'react-redux';
 
 const dummy = {
   isLoggedIn: true,
@@ -17,17 +18,40 @@ const dummy = {
 };
 
 const PostForm = () => {
+  const [text, setText] = useState<string>('');
+  const dispatch = useDispatch();
   const imageInput = useRef();
 
   const onClickImageUpload = useCallback(() => {
     imageInput.current.click();
   }, [imageInput.current]);
 
+  const onFinish = useCallback(
+    (values: any) => {
+      console.log('Success:', values);
+      console.log(text);
+    },
+    [text]
+  );
+
+  const onChangeText = useCallback(
+    (e: React.FormEvent<HTMLTextAreaElement>) => {
+      setText((e.target as HTMLTextAreaElement).value);
+    },
+    [text]
+  );
+
   return (
-    <Form style={{ margin: '10px 0 20px' }} encType="multipart/form-data">
+    <Form
+      style={{ margin: '10px 0 20px' }}
+      encType="multipart/form-data"
+      // autoComplete="off"
+      onFinish={onFinish}
+    >
       <Input.TextArea
         maxLength={140}
-        placeholder="어떤 신기한 일이 있었나요?"
+        placeholder="자신의 행복한 일상을 공유해봐요 ~!"
+        onChange={onChangeText}
       />
       <div>
         <input type="file" multiple hidden ref={imageInput} />
