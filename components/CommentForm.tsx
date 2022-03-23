@@ -1,11 +1,16 @@
 import { Button, Form, Input } from 'antd';
 import React, { useCallback, useState } from 'react';
-import PropTypes from 'prop-types';
+import { MainPostType } from '../types/post';
 
-const CommentForm = ({ post }: any) => {
+interface CommentFormProps {
+  post: MainPostType;
+}
+
+const CommentForm = ({ post }: CommentFormProps) => {
   const [commentText, setCommentText] = useState('');
 
   const onSubmitComment = useCallback(() => {
+    console.log(post);
     console.log(commentText);
   }, [commentText]);
 
@@ -31,10 +36,6 @@ const CommentForm = ({ post }: any) => {
       </Form.Item>
     </Form>
   );
-};
-
-CommentForm.propTypes = {
-  post: PropTypes.object.isRequired,
 };
 
 export default CommentForm;

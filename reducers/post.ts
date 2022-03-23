@@ -1,6 +1,7 @@
-import { MainPostType, PostStateType } from '../types/post';
+import { CommentsType, MainPostType, PostStateType } from '../types/post';
 
 export const ADD_POST = 'ADD_POST' as const;
+export const ADD_COMMENT = 'ADD_COMMENT' as const;
 export const DELETE_POST = 'DELETE_POST' as const;
 
 export const addPostAction = (payload: MainPostType[]) => {
@@ -10,7 +11,16 @@ export const addPostAction = (payload: MainPostType[]) => {
   };
 };
 
-type PostAction = ReturnType<typeof addPostAction>;
+export const addCommentAction = (payload: CommentsType) => {
+  return {
+    type: ADD_COMMENT,
+    payload,
+  };
+};
+
+type PostAction =
+  | ReturnType<typeof addPostAction>
+  | ReturnType<typeof addCommentAction>;
 
 export const initialState: PostStateType = {
   mainPosts: [
@@ -50,7 +60,7 @@ export const initialState: PostStateType = {
       ],
     },
     {
-      id: 1,
+      id: 2,
       User: {
         id: 1,
         nickname: '준',
@@ -95,6 +105,13 @@ export default (state = initialState, action: PostAction) => {
       return {
         ...state,
         mainPosts: [...action.payload, ...state.mainPosts],
+        postAdded: true,
+      };
+    case ADD_COMMENT:
+      console.log(state);
+      return {
+        ...state,
+        mainPosts: [...state.mainPosts],
         postAdded: true,
       };
     default:
