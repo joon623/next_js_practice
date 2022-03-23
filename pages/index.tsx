@@ -11,7 +11,7 @@ const Home = () => {
   return (
     <div>
       <AppLayout>
-        {isLoggedIn && <PostForm />}
+        {!isLoggedIn && <PostForm />}
         {post.mainPosts.map((el: MainPostType) => {
           return <PostCard post={el} />;
         })}

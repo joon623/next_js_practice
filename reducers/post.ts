@@ -1,11 +1,12 @@
-import { PostStateType } from '../types/post';
+import { MainPostType, PostStateType } from '../types/post';
 
 export const ADD_POST = 'ADD_POST' as const;
 export const DELETE_POST = 'DELETE_POST' as const;
 
-export const addPostAction = () => {
+export const addPostAction = (payload: MainPostType[]) => {
   return {
     type: ADD_POST,
+    payload,
   };
 };
 
@@ -88,23 +89,12 @@ export const initialState: PostStateType = {
   postAdded: false,
 };
 
-const dummyPost = {
-  id: 2,
-  content: '더미데이터입니다.',
-  User: {
-    id: 1,
-    nickname: '제로초',
-  },
-  Images: [],
-  Comments: [],
-};
-
 export default (state = initialState, action: PostAction) => {
   switch (action.type) {
     case ADD_POST:
       return {
         ...state,
-        mainPosts: [dummyPost, ...state.mainPosts],
+        mainPosts: [...action.payload, ...state.mainPosts],
         postAdded: true,
       };
     default:
