@@ -3,12 +3,16 @@ import { Button, Checkbox, Form, Input } from 'antd';
 import Head from 'next/head';
 import AppLayout from '../components/AppLayout';
 import useInput from '../hooks/useInput';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../reducers';
 
 const TextInput = ({ value }: { value: string }) => {
   return <div>{value}</div>;
 };
 
 function Signup() {
+  const dispatch = useDispatch();
+  const { user } = useSelector((state: RootState) => state.user);
   const [passwordCheck, setPasswordCheck] = useState('');
   const [term, setTerm] = useState(false);
   const [passwordError, setPasswordError] = useState(false);

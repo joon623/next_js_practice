@@ -1,5 +1,6 @@
 export const LOG_IN = 'LOG_IN' as const;
 export const LOG_OUT = 'LOG_OUT' as const;
+export const SIGN_UP = 'SIGN_UP' as const;
 
 export const loginAction = () => {
   return {
@@ -13,23 +14,35 @@ export const logoutAction = () => {
   };
 };
 
+export const signUpAction = (payload: {
+  id: string;
+  password: string;
+  nickname: string;
+}) => {
+  return {
+    type: SIGN_UP,
+    payload,
+  };
+};
+
 type UserState = {
-  user: { isLoggedIn: boolean };
+  isLoggedIn: false;
+  user?: { id: number; nickname: string };
   signUpData?: {};
   loginData?: {};
 };
 
 const initialState: UserState = {
-  user: {
-    isLoggedIn: false,
-  },
+  isLoggedIn: false,
+  user: null,
   signUpData: {},
   loginData: {},
 };
 
 type UserAction =
   | ReturnType<typeof loginAction>
-  | ReturnType<typeof logoutAction>;
+  | ReturnType<typeof logoutAction>
+  | ReturnType<typeof signUpAction>;
 
 const reducer = (state = initialState, action: UserAction) => {
   switch (action.type) {
@@ -41,6 +54,13 @@ const reducer = (state = initialState, action: UserAction) => {
         },
       };
     case LOG_OUT:
+      return {
+        ...state,
+        user: {
+          isLoggedIn: false,
+        },
+      };
+    case SIGN_UP:
       return {
         ...state,
         user: {

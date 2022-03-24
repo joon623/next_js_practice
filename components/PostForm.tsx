@@ -28,7 +28,6 @@ const PostForm = () => {
   }, [imageInput.current]);
 
   const onFinish = useCallback(() => {
-    console.log('alkj');
     dispatch(
       addPostAction([
         {
@@ -53,6 +52,7 @@ const PostForm = () => {
         },
       ])
     );
+    setText('');
   }, [text]);
 
   const onChangeImages = useCallback(
