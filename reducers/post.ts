@@ -11,7 +11,9 @@ export const addPostAction = (payload: MainPostType[]) => {
   };
 };
 
-export const addCommentAction = (payload: CommentsType) => {
+export const addCommentAction = (
+  payload: CommentsType | { postId: number }
+) => {
   return {
     type: ADD_COMMENT,
     payload,
@@ -108,10 +110,14 @@ export default (state = initialState, action: PostAction) => {
         postAdded: true,
       };
     case ADD_COMMENT:
-      console.log(state);
+      const postIndex = state.mainPosts.findIndex(
+        (el) => el.id === action.payload.postId
+      );
+      const copiedAction = { ...action.payload };
+      delete copiedAction.postId;
+      state.mainPosts[postIndex].Comments.push(copiedAction);
       return {
         ...state,
-        mainPosts: [...state.mainPosts],
         postAdded: true,
       };
     default:

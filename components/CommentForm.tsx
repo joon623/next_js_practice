@@ -1,5 +1,7 @@
 import { Button, Form, Input } from 'antd';
 import React, { useCallback, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addCommentAction } from '../reducers/post';
 import { MainPostType } from '../types/post';
 
 interface CommentFormProps {
@@ -7,11 +9,17 @@ interface CommentFormProps {
 }
 
 const CommentForm = ({ post }: CommentFormProps) => {
+  const dispatch = useDispatch();
   const [commentText, setCommentText] = useState('');
 
   const onSubmitComment = useCallback(() => {
-    console.log(post);
-    console.log(commentText);
+    dispatch(
+      addCommentAction({
+        User: { nickname: 'asd', id: 1123 },
+        content: commentText,
+        postId: post.id,
+      })
+    );
   }, [commentText]);
 
   const onChangeCommentText = useCallback((e) => {
