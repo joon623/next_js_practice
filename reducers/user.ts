@@ -1,26 +1,74 @@
-export const LOG_IN = 'LOG_IN' as const;
-export const LOG_OUT = 'LOG_OUT' as const;
-export const SIGN_UP = 'SIGN_UP' as const;
+export const LOG_IN_REQUEST = 'LOG_IN_REQUEST' as const;
+export const LOG_IN_SUCESSS = 'LOG_IN_SUCESSS' as const;
+export const LOG_IN_FAILURE = 'LOG_IN_FAILURE' as const;
+export const LOGOUT_REQUEST = 'LOGOUT_REQUEST' as const;
+export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS' as const;
+export const LOGOUT_FAILURE = 'LOGOUT_FAILURE' as const;
+export const SIGNUP_REQUEST = 'SIGNUP_REQUEST' as const;
+export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS' as const;
+export const SIGNUP_FAILURE = 'SIGNUP_FAILURE' as const;
 
-export const loginAction = () => {
+export const signupRequestAction = () => {
   return {
-    type: LOG_IN,
+    type: SIGNUP_REQUEST,
   };
 };
 
-export const logoutAction = () => {
+export const signupSuccessAction = () => {
   return {
-    type: LOG_OUT,
+    type: SIGNUP_SUCCESS,
   };
 };
 
-export const signUpAction = (payload: {
+export const signupFailureAction = () => {
+  return {
+    type: SIGNUP_FAILURE,
+  };
+};
+
+export const loginRequestAction = () => {
+  return {
+    type: LOG_IN_REQUEST,
+  };
+};
+
+export const loginSuccessAction = () => {
+  return {
+    type: LOG_IN_REQUEST,
+  };
+};
+
+export const loginFailureAction = () => {
+  return {
+    type: LOG_IN_REQUEST,
+  };
+};
+
+export const logoutRequestAction = () => {
+  return {
+    type: LOGOUT_REQUEST,
+  };
+};
+
+export const logoutSuccessAction = () => {
+  return {
+    type: LOGOUT_SUCCESS,
+  };
+};
+
+export const logoutFailureAction = () => {
+  return {
+    type: LOGOUT_FAILURE,
+  };
+};
+
+export const signUpRequestAction = (payload: {
   id: string;
   password: string;
   nickname: string;
 }) => {
   return {
-    type: SIGN_UP,
+    type: SIGNUP_REQUEST,
     payload,
   };
 };
@@ -40,27 +88,27 @@ const initialState: UserState = {
 };
 
 type UserAction =
-  | ReturnType<typeof loginAction>
-  | ReturnType<typeof logoutAction>
-  | ReturnType<typeof signUpAction>;
+  | ReturnType<typeof loginRequestAction>
+  | ReturnType<typeof logoutRequestAction>
+  | ReturnType<typeof signUpRequestAction>;
 
 const reducer = (state = initialState, action: UserAction) => {
   switch (action.type) {
-    case LOG_IN:
+    case LOG_IN_REQUEST:
       return {
         ...state,
         user: {
           isLoggedIn: true,
         },
       };
-    case LOG_OUT:
+    case LOGOUT_REQUEST:
       return {
         ...state,
         user: {
           isLoggedIn: false,
         },
       };
-    case SIGN_UP:
+    case SIGNUP_REQUEST:
       return {
         ...state,
         user: {

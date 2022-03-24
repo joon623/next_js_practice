@@ -6,7 +6,7 @@ import { RootState } from '../reducers';
 import { MainPostType } from '../types/post';
 
 const Home = () => {
-  const { isLoggedIn } = useSelector((state: RootState) => state.user.user);
+  const { isLoggedIn } = useSelector((state: RootState) => state.user);
   const post = useSelector((state: RootState) => state.post);
   return (
     <div>

@@ -1,6 +1,5 @@
 import React, { useCallback, useState } from 'react';
 import { Button, Checkbox, Form, Input } from 'antd';
-import Head from 'next/head';
 import AppLayout from '../components/AppLayout';
 import useInput from '../hooks/useInput';
 import { useDispatch, useSelector } from 'react-redux';

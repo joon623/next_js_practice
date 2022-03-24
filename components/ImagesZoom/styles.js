@@ -5,6 +5,7 @@ export const Global = createGlobalStyle`
   .slick-slide {
     display: inline-block;
   }
+  // transform 아래 position: fixed가 있으면  fixed를 제대로 잡지 못한다. 브라우저 버그
   .ant-card-cover {
     transform: none !important;
   }
